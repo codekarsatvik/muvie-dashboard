@@ -280,7 +280,7 @@
     });
   };
 
-  axios.get("http://localhost:5000/admin_queue")
+  axios.get("https://muvie.app/api/admin_queue")
     .then(response => {
       const data = response.data;
       console.log(data)
@@ -321,7 +321,7 @@
       console.log(error);
     });
 
-    axios.get('http://localhost:5000/api/log')
+    axios.get('https://muvie.app/api/api/log')
     .then(res => {
       // Use the log content here
       console.log(res.data["log"]);
