@@ -9,19 +9,20 @@
     <meta name="description" content="description here">
     <meta name="keywords" content="keywords,here">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <!--Replace with your tailwind.css once created-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
+        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .log-container {
-  padding: 30px;
-  border-radius: 5px;
-  overflow-y: scroll;
-  max-height: 700px;
-}
-
+            padding: 30px;
+            border-radius: 5px;
+            overflow-y: scroll;
+            max-height: 700px;
+        }
     </style>
 
 </head>
@@ -40,24 +41,29 @@
             </div>
 
 
-            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20" id="nav-content">
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20"
+                id="nav-content">
                 <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-pink-600 no-underline hover:text-gray-900 border-b-2 border-orange-600 hover:border-orange-600">
-                            <i class="fas fa-home fa-fw mr-3 text-pink-600"></i><span class="pb-1 md:pb-0 text-sm">Home</span>
+                        <a href="#"
+                            class="block py-1 md:py-3 pl-1 align-middle text-pink-600 no-underline hover:text-gray-900 border-b-2 border-orange-600 hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 text-pink-600"></i><span
+                                class="pb-1 md:pb-0 text-sm">Home</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#tasks" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-pink-500">
+                        <a href="#tasks"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-pink-500">
                             <i class="fas fa-tasks fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Tasks</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#log-container" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-purple-500">
+                        <a href="#log-container"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-purple-500">
                             <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
                         </a>
                     </li>
-                    
+
                 </ul>
 
 
@@ -79,7 +85,8 @@
                     <div class="bg-white border rounded shadow p-2">
                         <div class="flex flex-row items-center">
                             <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
+                                <div class="rounded p-3 bg-green-600"><i
+                                        class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-500">Total Creations</h5>
@@ -94,7 +101,8 @@
                     <div class="bg-white border rounded shadow p-2">
                         <div class="flex flex-row items-center">
                             <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i></div>
+                                <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
+                                </div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-500">Total Users</h5>
@@ -104,13 +112,14 @@
                     </div>
                     <!--/Metric Card-->
                 </div>
-               
+
                 <div class="w-full md:w-1/2 xl:w-1/3 p-3">
                     <!--Metric Card-->
                     <div class="bg-white border rounded shadow p-2">
                         <div class="flex flex-row items-center">
                             <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
+                                <div class="rounded p-3 bg-indigo-600"><i
+                                        class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-500">Executed tasks</h5>
@@ -126,11 +135,12 @@
                     <div class="bg-white border rounded shadow p-2">
                         <div class="flex flex-row items-center">
                             <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
+                                <div class="rounded p-3 bg-indigo-600"><i
+                                        class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-500">Executing tasks</h5>
-                                <h3 class="font-bold text-3xl" id ="executing-task-count">-- </h3>
+                                <h3 class="font-bold text-3xl" id="executing-task-count">-- </h3>
                             </div>
                         </div>
                     </div>
@@ -141,11 +151,12 @@
                     <div class="bg-white border rounded shadow p-2">
                         <div class="flex flex-row items-center">
                             <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i></div>
+                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
+                                </div>
                             </div>
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-500">Failed tasks</h5>
-                                <h3 class="font-bold text-3xl" id = "failed-task-count">-- </h3>
+                                <h3 class="font-bold text-3xl" id="failed-task-count">-- </h3>
                             </div>
                         </div>
                     </div>
@@ -158,38 +169,67 @@
 
             <div class="flex flex-row flex-wrap flex-grow mt-2">
 
- 
 
-               <!--  task table -->
-               <div id="tasks" class="w-full p-4 flex flex-col  justify-center">
-                <table class="w-full bg-white">
-                    <thead>
-                      <tr>
-                        <th class="border p-2">No.</th>
-                        <th class="border p-2">Created By</th>
-                        <th class="border p-2">Status</th>
-                        <th class="border p-2">Created at</th>
-                      </tr>
-                    </thead>
-                    <tbody id="admin-queue-table-body">
-                    </tbody>
-                  </table>
-                  
-                  <div class="flex justify-between mt-4">
-                    <button id="prev-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      Prev
-                    </button>
-                    <button id="next-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      Next
-                    </button>
-                  </div>
-              </div>
-              <!--  task table end -->
-              <div class="log-container bg-white rounded p-5" id="log-container"></div>
 
-          
+                <!--  task table -->
+                <div id="tasks" class="w-full p-4 flex flex-col  justify-center">
+                    <table class="w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="border p-2">No.</th>
+                                <th class="border p-2">Created By</th>
+                                <th class="border p-2">Status</th>
+                                <th class="border p-2">Created at</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-queue-table-body">
+                        </tbody>
+                    </table>
 
-       
+                    <div class="flex justify-between mt-4">
+                        <button id="prev-btn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Prev
+                        </button>
+                        <button id="next-btn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <!-- Whatsapp bot table -->
+                <div id="whatsapp_bot" class="w-full p-4 flex flex-col  justify-center">
+                    <table class="w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="border p-2">No.</th>
+                                <th class="border p-2">Contact</th>
+                                <th class="border p-2">User</th>
+                                <th class="border p-2">Count</th>
+                                <th class="border p-2">User Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-whatsapp-table-body">
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-between mt-4">
+                        <button id="prev-btn-whatsapp"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Prev
+                        </button>
+                        <button id="next-btn-whatsapp"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <!--  task table end -->
+                <div class="log-container bg-white rounded p-5" id="log-container"></div>
+
+
+
+
 
 
             </div>
@@ -204,121 +244,205 @@
 
 
     <script>
-    /*Toggle dropdown list*/
-    /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+        /*Toggle dropdown list*/
+        /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
 
-// Axios request
-  function getDashboard(){
-  const adminQueueTableBody = document.getElementById("admin-queue-table-body");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const pageSize = 15;
-  let currentPage = 0;
+        // Axios request
+        function getDashboard() {
+            const adminQueueTableBody = document.getElementById("admin-queue-table-body");
+            const adminWhatsappTableBody = document.getElementById("admin-whatsapp-table-body");
+            const prevBtn = document.getElementById("prev-btn");
+            const nextBtn = document.getElementById("next-btn");
+            const prevBtnWhatsapp = document.getElementById("prev-btn-whatsapp");
+            const nextBtnWhatsapp = document.getElementById("next-btn-whatsapp");
+            const pageSize = 15;
+            let currentPage = 0;
 
-  const renderData = (data) => {
-    adminQueueTableBody.innerHTML = "";
+            const renderData = (data) => {
+                adminQueueTableBody.innerHTML = "";
 
-    data.forEach((creation, index) => {
-      const tr = document.createElement("tr");
-      tr.className = `${creation["status"] === "Executed" ? "bg-success-100" : (creation["status"] === "Queued" ? "bg-warning-100" : "bg-primary-100")} cursor-pointer`;
-      
-      const tdNo = document.createElement("td");
-      tdNo.className = "whitespace-nowrap px-6 py-4 font-medium";
-      tdNo.textContent = index + 1 + currentPage * pageSize;
+                data.forEach((creation, index) => {
+                    const tr = document.createElement("tr");
+                    tr.className = `${creation["status"] === "Executed" ? "bg-success-100" : (creation["status"] === "Queued" ? "bg-warning-100" : "bg-primary-100")} cursor-pointer`;
 
-      const tdUseremail = document.createElement("td");
-      tdUseremail.className = "whitespace-nowrap px-6 py-4";
+                    const tdNo = document.createElement("td");
+                    tdNo.className = "whitespace-nowrap px-6 py-4 font-medium";
+                    tdNo.textContent = index + 1 + currentPage * pageSize;
 
-      tdUseremail.textContent =  creation["user_email"];
+                    const tdUseremail = document.createElement("td");
+                    tdUseremail.className = "whitespace-nowrap px-6 py-4";
+
+                    tdUseremail.textContent = creation["user_email"];
 
 
-      const tdStatus = document.createElement("td");
-      tdStatus.className = "whitespace-nowrap px-6 py-4";
-      tdStatus.textContent = creation["status"];
-      const now = Date.now();
-      const targetTime = new Date(creation["created_at"]);
-        const diff = (now - targetTime.getTime());
-        let formattedDiff;
-        if (diff < 1000) {
-            formattedDiff = "less than 1 second";
-        } else if (diff < 60 * 1000) {
-            formattedDiff = Math.floor(diff / 1000) + " seconds ";
-        } else if (diff < 60 * 60 * 1000) {
-            formattedDiff = Math.floor(diff / (60 * 1000)) + " minutes ";
-        } else if (diff < 24 * 60 * 60 * 1000) {
-            formattedDiff = Math.floor(diff / (60 * 60 * 1000)) + " hours ";
-        } else {
-            formattedDiff = Math.floor(diff / (24 * 60 * 60 * 1000)) + " days ";
+                    const tdStatus = document.createElement("td");
+                    tdStatus.className = "whitespace-nowrap px-6 py-4";
+                    tdStatus.textContent = creation["status"];
+                    const now = Date.now();
+                    const targetTime = new Date(creation["created_at"]);
+                    const diff = (now - targetTime.getTime());
+                    let formattedDiff;
+                    if (diff < 1000) {
+                        formattedDiff = "less than 1 second";
+                    } else if (diff < 60 * 1000) {
+                        formattedDiff = Math.floor(diff / 1000) + " seconds ";
+                    } else if (diff < 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 1000)) + " minutes ";
+                    } else if (diff < 24 * 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 60 * 1000)) + " hours ";
+                    } else {
+                        formattedDiff = Math.floor(diff / (24 * 60 * 60 * 1000)) + " days ";
+                    }
+
+                    creation.created_at = formattedDiff
+
+                    const tdCreatedAt = document.createElement("td");
+                    tdCreatedAt.className = "whitespace-nowrap px-6 py-4";
+                    tdCreatedAt.textContent = `${formattedDiff} ago`;
+
+                    tr.appendChild(tdNo);
+                    tr.appendChild(tdUseremail);
+                    tr.appendChild(tdStatus);
+                    tr.appendChild(tdCreatedAt);
+
+                    adminQueueTableBody.appendChild(tr);
+                });
+            };
+            const renderDataWhatsapp = (data) => {
+                adminWhatsappTableBody.innerHTML = "";
+
+                data.forEach((creation, index) => {
+                    const tr = document.createElement("tr");
+                    tr.className = `${creation["status"] === "Executed" ? "bg-success-100" : (creation["status"] === "Queued" ? "bg-warning-100" : "bg-primary-100")} cursor-pointer`;
+
+                    const tdNo = document.createElement("td");
+                    tdNo.className = "whitespace-nowrap px-6 py-4 font-medium";
+                    tdNo.textContent = index + 1 + currentPage * pageSize;
+
+                    const tdUserNumber = document.createElement("td");
+                    tdUserNumber.className = "whitespace-nowrap px-6 py-4";
+
+                    tdUserNumber.textContent = creation["phone"];
+
+
+                    const tdName = document.createElement("td");
+                    tdName.className = "whitespace-nowrap px-6 py-4";
+                    tdName.textContent = creation["name"];
+
+                    const tdCount = document.createElement("td");
+                    tdCount.className = "whitespace-nowrap px-6 py-4";
+                    tdCount.textContent = creation["query_count"];
+
+                    const now = Date.now();
+                    const targetTime = new Date(creation["created_at"]);
+                    const diff = (now - targetTime.getTime());
+                    let formattedDiff;
+                    if (diff < 1000) {
+                        formattedDiff = "less than 1 second";
+                    } else if (diff < 60 * 1000) {
+                        formattedDiff = Math.floor(diff / 1000) + " seconds ";
+                    } else if (diff < 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 1000)) + " minutes ";
+                    } else if (diff < 24 * 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 60 * 1000)) + " hours ";
+                    } else {
+                        formattedDiff = Math.floor(diff / (24 * 60 * 60 * 1000)) + " days ";
+                    }
+
+                    creation.created_at = formattedDiff
+
+                    const tdCreatedAt = document.createElement("td");
+                    tdCreatedAt.className = "whitespace-nowrap px-6 py-4";
+                    tdCreatedAt.textContent = `${formattedDiff} ago`;
+
+                    tr.appendChild(tdNo);
+                    tr.appendChild(tdUserNumber);
+                    tr.appendChild(tdName);
+                    tr.appendChild(tdCount);
+                    tr.appendChild(tdCreatedAt);
+
+                    adminWhatsappTableBody.appendChild(tr);
+                });
+            };
+
+            axios.get("https://muvie.app/api/admin_queue")
+                .then(response => {
+                    const data = response.data;
+                    console.log(data)
+                    document.getElementById("total-task-count").innerHTML = data.length;
+                    document.getElementById("executed-task-count").innerHTML = data.filter(task => task["status"] == 'Executed').length
+                    document.getElementById("executing-task-count").innerHTML = data.filter(task => task["status"] == 'Executing').length
+                    document.getElementById("failed-task-count").innerHTML = data.filter(task => task["status"] == 'Failed').length
+
+                    const distinctEmails = data.reduce((acc, curr) => {
+                        const email = curr["user_email"];
+                        if (!acc[email]) {
+                            acc[email] = true;
+                        }
+                        return acc;
+                    }, {});
+                    const emailCount = Object.keys(distinctEmails).length;
+                    document.getElementById("total-user-count").innerHTML = emailCount;
+
+
+                    const pageCount = Math.ceil(data.length / pageSize);
+                    renderData(data.slice(0, pageSize));
+
+                    nextBtn.addEventListener("click", () => {
+                        if (currentPage < pageCount - 1) {
+                            currentPage++;
+                            renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+
+                    prevBtn.addEventListener("click", () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            axios.get("https://muvie.app/api/admin_whatsapp_bot")
+                .then(response => {
+                    const data = response.data;
+                    console.log(data)
+                    const pageCount = Math.ceil(data.length / pageSize);
+                    renderDataWhatsapp(data.slice(0, pageSize));
+
+                    nextBtnWhatsapp.addEventListener("click", () => {
+                        if (currentPage < pageCount - 1) {
+                            currentPage++;
+                            renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+
+                    prevBtnWhatsapp.addEventListener("click", () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+                    
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            axios.get('https://muvie.app/api/api/log')
+                .then(res => {
+                    // Use the log content here
+                    console.log(res.data["log"]);
+                    const logContainer = document.getElementById('log-container');
+                    logContainer.innerText = res.data["log"];
+                    logContainer.scrollTop = logContainer.scrollHeight;
+                })
+                .catch(error => console.error(error));
         }
-
-        creation.created_at = formattedDiff
-
-      const tdCreatedAt = document.createElement("td");
-      tdCreatedAt.className = "whitespace-nowrap px-6 py-4";
-      tdCreatedAt.textContent = `${formattedDiff} ago`;
-
-      tr.appendChild(tdNo);
-      tr.appendChild(tdUseremail);
-      tr.appendChild(tdStatus);
-      tr.appendChild(tdCreatedAt);
-
-      adminQueueTableBody.appendChild(tr);
-    });
-  };
-
-  axios.get("https://muvie.app/api/admin_queue")
-    .then(response => {
-      const data = response.data;
-      console.log(data)
-      document.getElementById("total-task-count").innerHTML = data.length;
-      document.getElementById("executed-task-count").innerHTML = data.filter(task => task["status"] == 'Executed').length
-      document.getElementById("executing-task-count").innerHTML = data.filter(task => task["status"] == 'Executing').length
-      document.getElementById("failed-task-count").innerHTML = data.filter(task => task["status"] == 'Failed').length
-
-      const distinctEmails = data.reduce((acc, curr) => {
-      const email = curr["user_email"];
-      if (!acc[email]) {
-        acc[email] = true;
-      }
-      return acc;
-      }, {});
-      const emailCount = Object.keys(distinctEmails).length;
-      document.getElementById("total-user-count").innerHTML = emailCount;
-
-
-      const pageCount = Math.ceil(data.length / pageSize);
-      renderData(data.slice(0, pageSize));
-
-      nextBtn.addEventListener("click", () => {
-        if (currentPage < pageCount - 1) {
-          currentPage++;
-          renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
-        }
-      });
-
-      prevBtn.addEventListener("click", () => {
-        if (currentPage > 0) {
-          currentPage--;
-          renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
-        }
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-    axios.get('https://muvie.app/api/api/log')
-    .then(res => {
-      // Use the log content here
-      console.log(res.data["log"]);
-      const logContainer = document.getElementById('log-container');
-      logContainer.innerText = res.data["log"];
-      logContainer.scrollTop = logContainer.scrollHeight;
-    })
-    .catch(error => console.error(error));
-    }
-    getDashboard();
-    setInterval(getDashboard, 60000);
+        getDashboard();
+        setInterval(getDashboard, 60000);
     </script>
 
 </body>
