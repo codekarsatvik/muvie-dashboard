@@ -206,7 +206,7 @@
                                 <th class="border p-2">Contact</th>
                                 <th class="border p-2">User</th>
                                 <th class="border p-2">Count</th>
-                                <th class="border p-2">User Created</th>
+                                <th class="border p-2">Last Created</th>
                             </tr>
                         </thead>
                         <tbody id="admin-whatsapp-table-body">
@@ -219,6 +219,32 @@
                             Prev
                         </button>
                         <button id="next-btn-whatsapp"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <div id="whatsapp__chat_bot" class="w-full p-4 flex flex-col  justify-center">
+                    <table class="w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="border p-2">No.</th>
+                                <th class="border p-2">Contact</th>
+                                <th class="border p-2">User</th>
+                                <th class="border p-2">Query</th>
+                                <th class="border p-2">Last Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-whatsapp-chat-table-body">
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-between mt-4">
+                        <button id="prev-btn-whatsapp-chat"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Prev
+                        </button>
+                        <button id="next-btn-whatsapp-chat"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Next
                         </button>
@@ -251,10 +277,13 @@
         function getDashboard() {
             const adminQueueTableBody = document.getElementById("admin-queue-table-body");
             const adminWhatsappTableBody = document.getElementById("admin-whatsapp-table-body");
+            const adminWhatsappChatTableBody = document.getElementById("admin-whatsapp-chat-table-body");
             const prevBtn = document.getElementById("prev-btn");
             const nextBtn = document.getElementById("next-btn");
             const prevBtnWhatsapp = document.getElementById("prev-btn-whatsapp");
             const nextBtnWhatsapp = document.getElementById("next-btn-whatsapp");
+            const prevBtnWhatsappChats = document.getElementById("prev-btn-whatsapp-chat");
+            const nextBtnWhatsappChats = document.getElementById("next-btn-whatsapp-chat");
             const pageSize = 15;
             let currentPage = 0;
 
@@ -333,6 +362,45 @@
                     tdCount.className = "whitespace-nowrap px-6 py-4";
                     tdCount.textContent = creation["query_count"];
 
+                    const tdLastQuery = document.createElement("td");
+                    tdLastQuery.className = "whitespace-nowrap px-6 py-4";
+                    tdLastQuery.textContent = creation["last_input"];
+
+                    tr.appendChild(tdNo);
+                    tr.appendChild(tdUserNumber);
+                    tr.appendChild(tdName);
+                    tr.appendChild(tdCount);
+                    tr.appendChild(tdLastQuery);
+
+                    adminWhatsappTableBody.appendChild(tr);
+                });
+            };
+
+            const renderDataWhatsappChats = (data) => {
+                adminWhatsappChatTableBody.innerHTML = "";
+
+                data.forEach((creation, index) => {
+                    const tr = document.createElement("tr");
+                    tr.className = `${creation["status"] === "Executed" ? "bg-success-100" : (creation["status"] === "Queued" ? "bg-warning-100" : "bg-primary-100")} cursor-pointer`;
+
+                    const tdNo = document.createElement("td");
+                    tdNo.className = "whitespace-nowrap px-6 py-4 font-medium";
+                    tdNo.textContent = index + 1 + currentPage * pageSize;
+
+                    const tdUserNumber = document.createElement("td");
+                    tdUserNumber.className = "whitespace-nowrap px-6 py-4";
+
+                    tdUserNumber.textContent = creation["created_by"];
+
+
+                    const tdName = document.createElement("td");
+                    tdName.className = "whitespace-nowrap px-6 py-4";
+                    tdName.textContent = creation["name"];
+
+                    const tdQuery = document.createElement("td");
+                    tdQuery.className = "whitespace-nowrap px-6 py-4";
+                    tdQuery.textContent = creation["user_inputs"];
+
                     const now = Date.now();
                     const targetTime = new Date(creation["created_at"]);
                     const diff = (now - targetTime.getTime());
@@ -358,10 +426,10 @@
                     tr.appendChild(tdNo);
                     tr.appendChild(tdUserNumber);
                     tr.appendChild(tdName);
-                    tr.appendChild(tdCount);
+                    tr.appendChild(tdQuery);
                     tr.appendChild(tdCreatedAt);
 
-                    adminWhatsappTableBody.appendChild(tr);
+                    adminWhatsappChatTableBody.appendChild(tr);
                 });
             };
 
@@ -426,11 +494,39 @@
                             renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
                         }
                     });
-                    
+
                 })
                 .catch(error => {
                     console.log(error);
                 });
+            
+                axios.get("https://muvie.app/api/admin_chat_whatsapp_bot")
+                .then(response => {
+                    let data = response.data;
+                    data = data.reverse()
+                    console.log(data)
+                    const pageCount = Math.ceil(data.length / pageSize);
+                    renderDataWhatsappChats(data.slice(0, pageSize));
+
+                    nextBtnWhatsappChats.addEventListener("click", () => {
+                        if (currentPage < pageCount - 1) {
+                            currentPage++;
+                            renderDataWhatsappChats(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+
+                    prevBtnWhatsappChats.addEventListener("click", () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderDataWhatsappChats(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            
             axios.get('https://muvie.app/api/api/log')
                 .then(res => {
                     // Use the log content here
