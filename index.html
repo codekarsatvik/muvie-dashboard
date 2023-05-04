@@ -162,6 +162,38 @@
                     </div>
                     <!--/Metric Card-->
                 </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Bot User</h5>
+                                <h3 class="font-bold text-3xl" id="bot-user-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Bot Queries</h5>
+                                <h3 class="font-bold text-3xl" id="bot-queries-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
             </div>
 
             <!--Divider-->
@@ -477,6 +509,7 @@
             axios.get("https://muvie.app/api/admin_whatsapp_bot")
                 .then(response => {
                     const data = response.data;
+                    document.getElementById("bot-user-count").innerHTML = data.length;
                     console.log(data)
                     const pageCount = Math.ceil(data.length / pageSize);
                     renderDataWhatsapp(data.slice(0, pageSize));
@@ -503,6 +536,7 @@
                 axios.get("https://muvie.app/api/admin_chat_whatsapp_bot")
                 .then(response => {
                     let data = response.data;
+                    document.getElementById("bot-queries-count").innerHTML = data.length;
                     data = data.reverse()
                     console.log(data)
                     const pageCount = Math.ceil(data.length / pageSize);
