@@ -23,6 +23,17 @@
             overflow-y: scroll;
             max-height: 700px;
         }
+
+        .truncate {
+            white-space: nowrap;
+            /* prevent the text from wrapping */
+            overflow: hidden;
+            /* hide the overflowing text */
+            text-overflow: ellipsis;
+            /* replace the overflow with an ellipsis */
+            max-width: 200px;
+            /* set a maximum width for the container */
+        }
     </style>
 
 </head>
@@ -431,8 +442,9 @@
 
                     const tdQuery = document.createElement("td");
                     tdQuery.className = "whitespace-nowrap px-6 py-4";
-                    tdQuery.textContent = creation["user_inputs"];
+                    tdQuery.textContent = creation["user_query"];
 
+                  
                     const now = Date.now();
                     const targetTime = new Date(creation["created_at"]);
                     const diff = (now - targetTime.getTime());
@@ -532,8 +544,8 @@
                 .catch(error => {
                     console.log(error);
                 });
-            
-                axios.get("https://muvie.app/api/admin_chat_whatsapp_bot")
+
+            axios.get("https://muvie.app/api/admin_chat_whatsapp_bot")
                 .then(response => {
                     let data = response.data;
                     document.getElementById("bot-queries-count").innerHTML = data.length;
@@ -560,7 +572,7 @@
                 .catch(error => {
                     console.log(error);
                 });
-            
+
             axios.get('https://muvie.app/api/api/log')
                 .then(res => {
                     // Use the log content here
