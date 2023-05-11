@@ -223,6 +223,8 @@
                                 <th class="border p-2">Created By</th>
                                 <th class="border p-2">Status</th>
                                 <th class="border p-2">Created at</th>
+                                <th class="border p-2">Actions</th>
+
                             </tr>
                         </thead>
                         <tbody id="admin-queue-table-body">
@@ -372,10 +374,43 @@
                     tdCreatedAt.className = "whitespace-nowrap px-6 py-4";
                     tdCreatedAt.textContent = `${formattedDiff} ago`;
 
+                    const tdAction = document.createElement("td");
+                    tdAction.className = "whitespace-nowrap px-6 py-4";
+
+                    const button = document.createElement("button");
+                    button.textContent = "Regenerate";
+                    button.className = "bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                    button.addEventListener("click", () => {
+                        const id = creation['id'];
+                        const data = { id: id };
+
+                        fetch("https://muvie.app/api/re-trigger-query", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        })
+                            .then((response) => response.json())
+                            .then((result) => {
+                                // Handle the API response here
+                                console.log(result);
+                                const logsSection = document.getElementById("log-container");
+                                logsSection.scrollIntoView({ behavior: "smooth" });
+                            })
+                            .catch((error) => {
+                                // Handle any errors that occurred during the API call
+                                console.error(error);
+                            });
+                    });
+
+                    tdAction.appendChild(button);
+
                     tr.appendChild(tdNo);
                     tr.appendChild(tdUseremail);
                     tr.appendChild(tdStatus);
                     tr.appendChild(tdCreatedAt);
+                    tr.appendChild(tdAction);
 
                     adminQueueTableBody.appendChild(tr);
                 });
@@ -444,7 +479,7 @@
                     tdQuery.className = "whitespace-nowrap px-6 py-4";
                     tdQuery.textContent = creation["user_query"];
 
-                  
+
                     const now = Date.now();
                     const targetTime = new Date(creation["created_at"]);
                     const diff = (now - targetTime.getTime());
