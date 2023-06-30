@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Muvie Dashboard</title>
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
+        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .log-container {
+            padding: 30px;
+            border-radius: 5px;
+            overflow-y: scroll;
+            max-height: 700px;
+        }
+
+        .truncate {
+            white-space: nowrap;
+            /* prevent the text from wrapping */
+            overflow: hidden;
+            /* hide the overflowing text */
+            text-overflow: ellipsis;
+            /* replace the overflow with an ellipsis */
+            max-width: 200px;
+            /* set a maximum width for the container */
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow mb-20 ">
+
+
+        <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
+
+            <div class="w-1/2 pl-2 md:pl-0">
+                <a class="text-gray-900 text-base xl:text-xl no-underline hover:no-underline font-bold"
+                    href="../index.html">
+                    <i class="fas fa-sun text-pink-600 pr-3"></i> Dashboard
+                </a>
+            </div>
+
+
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20"
+                id="nav-content">
+                <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="../index.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900  hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 text-gray-500"></i><span
+                                class="pb-1 md:pb-0 text-sm">Home</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href=""
+                            class="block py-1 md:py-3 pl-1 align-middle ttext-pink-600 no-underline hover:text-gray-900 hover:border-pink-500">
+                            <i class="fas fa-tasks fa-fw mr-3 text-pink-600"></i><span
+                                class="pb-1 md:pb-0 text-sm">Whatsapp</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="logs.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900  hover:border-purple-500">
+                            <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!--Container-->
+
+    <div class="container w-full mx-auto pt-20">
+
+        <h2 class="text-2xl font-bold text-center mb-10">Admin Controls </h2>
+
+        <div class="w-full px-4 flex flex-col sm:flex-row gap-8 text-gray-800 leading-normal">
+
+            <div class="container">
+                <div id="numberapp">
+                    <input id="numberInput" type="text"
+                        class="border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div id="displayNumbers" class="mt-4 flex flex-wrap gap-2"></div>
+                </div>
+                <button id="sendMessageButton"
+                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+                    Send Message
+                </button>
+            </div>
+            <div class="container">
+                <div id="emailapp">
+                    <input id="emailInput" type="text"
+                        class="border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div id="displayEmails" class="mt-4 flex flex-wrap gap-2"></div>
+                </div>
+                <button id="sendEmailButton"
+                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+                    Send Emails
+                </button>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <!--/container-->
+
+
+    <script>
+        const numberInput = document.getElementById('numberInput');
+        const displayNumbers = document.getElementById('displayNumbers');
+        const sendMessageButton = document.getElementById('sendMessageButton');
+
+        let paddedNumbers = []; // Array to store padded numbers
+
+        numberInput.addEventListener('input', () => {
+            const numbers = numberInput.value.split(',');
+            displayNumbers.innerHTML = '';
+
+            numbers.forEach(number => {
+                const trimmedNumber = number.trim();
+                if (trimmedNumber !== '') {
+                    // Remove any non-digit characters
+                    const formattedNumber = trimmedNumber.replace(/\D/g, '');
+
+                    // Apply length constraint of 10 digits
+                    if (formattedNumber.length === 10) {
+                        const paddedNumber = formatIndianMobileNumber(formattedNumber);
+                        paddedNumbers.push(paddedNumber);
+
+                        const paddedBox = document.createElement('div');
+                        paddedBox.className = 'bg-blue-200 rounded-md py-2 px-4 flex items-center';
+                        paddedBox.textContent = paddedNumber;
+
+                        const closeButton = document.createElement('button');
+                        closeButton.className = 'ml-2 text-red-500 focus:outline-none';
+                        closeButton.innerHTML = '&times;';
+                        closeButton.addEventListener('click', () => {
+                            paddedBox.remove();
+                            removePaddedNumber(paddedNumber);
+                        });
+
+                        paddedBox.appendChild(closeButton);
+                        displayNumbers.appendChild(paddedBox);
+                    }
+                }
+            });
+        });
+
+        sendMessageButton.addEventListener('click', () => {
+            if (paddedNumbers.length > 0) {
+                // Send the paddedNumbers array to the Flask backend using Axios
+                axios.post('http://localhost:5000/send_whatsapp_message_admin', { numbers: paddedNumbers })
+                    .then(response => {
+                        // Handle the response from the Flask backend
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        // Handle any errors that occur during the request
+                        console.error(error);
+                    });
+            }
+        });
+
+        function formatIndianMobileNumber(number) {
+            // Apply formatting to the number (e.g., 9876543210 -> +91 98765-43210)
+            return '+91' + number;
+        }
+
+        function removePaddedNumber(number) {
+            const index = paddedNumbers.indexOf(number);
+            if (index !== html - 1) {
+                paddedNumbers.splice(index, 1);
+            }
+        }
+
+
+        //  For Emails
+        const emailInput = document.getElementById('emailInput');
+        const displayEmails = document.getElementById('displayEmails');
+        const sendEmailButton = document.getElementById('sendMessageButton');
+
+        let paddedEmails = []; // Array to store padded emails
+
+        emailInput.addEventListener('input', () => {
+            const emails = emailInput.value.split(',');
+            displayEmails.innerHTML = '';
+
+            emails.forEach(email => {
+                const trimmedEmail = email.trim();
+                if (trimmedEmail !== '') {
+                    if (isValidEmail(trimmedEmail)) {
+                        const paddedEmail = padEmail(trimmedEmail);
+                        paddedEmails.push(paddedEmail);
+
+                        const paddedBox = document.createElement('div');
+                        paddedBox.className = 'bg-blue-200 rounded-md py-2 px-4 flex items-center';
+                        paddedBox.textContent = paddedEmail;
+
+                        const closeButton = document.createElement('button');
+                        closeButton.className = 'ml-2 text-red-500 focus:outline-none';
+                        closeButton.innerHTML = '&times;';
+                        closeButton.addEventListener('click', () => {
+                            paddedBox.remove();
+                            removePaddedEmail(paddedEmail);
+                        });
+
+                        paddedBox.appendChild(closeButton);
+                        displayEmails.appendChild(paddedBox);
+                    } else {
+                        console.log(`Invalid email: ${trimmedEmail}`);
+                    }
+                }
+            });
+        });
+
+        sendMessageButton.addEventListener('click', () => {
+            if (paddedEmails.length > 0) {
+                // Send the paddedEmails array to the Flask backend using Axios
+                axios.post('/send_emails', { emails: paddedEmails })
+                    .then(response => {
+                        // Handle the response from the Flask backend
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        // Handle any errors that occur during the request
+                        console.error(error);
+                    });
+            }
+        });
+
+        function isValidEmail(email) {
+            // Regular expression pattern for email validation
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return pattern.test(email);
+        }
+
+        function padEmail(email) {
+            // Apply padding to the email address
+            const atIndex = email.indexOf('@');
+            if (atIndex !== -1) {
+                const username = email.substring(0, atIndex);
+                const domain = email.substring(atIndex);
+                const paddedUsername = username.padEnd(10, '*');
+                return paddedUsername + domain;
+            }
+            return email;
+        }
+
+        function removePaddedEmail(email) {
+            const index = paddedEmails.indexOf(email);
+            if (index !== -1) {
+                paddedEmails.splice(index, 1);
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>

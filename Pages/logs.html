@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Muvie Dashboard</title>
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
+        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .log-container {
+            padding: 30px;
+            border-radius: 5px;
+            overflow-y: scroll;
+            max-height: 700px;
+        }
+
+        .truncate {
+            white-space: nowrap;
+            /* prevent the text from wrapping */
+            overflow: hidden;
+            /* hide the overflowing text */
+            text-overflow: ellipsis;
+            /* replace the overflow with an ellipsis */
+            max-width: 200px;
+            /* set a maximum width for the container */
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
+        <div class="w-full container mx-auto flex flex-wrap items-center px-2 justify-between mt-0 pt-3 pb-3 md:pb-0">
+            <div class="w-1/2 pl-2 md:pl-0">
+                <a class="text-gray-900 text-base xl:text-xl no-underline hover:no-underline font-bold" href="../index.html">
+                    <i class="fas fa-sun text-pink-600 pr-3"></i> Dashboard
+                </a>
+            </div>
+
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20"
+                id="nav-content">
+                <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="../index.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-pink-600 no-underline hover:text-gray-900 hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 text-pink-600"></i><span
+                                class="pb-1 md:pb-0 text-sm">Home</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="whatsapp.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-pink-500">
+                            <i class="fas fa-tasks fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Whatsapp</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href=""
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-purple-500">
+                            <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Hamburger Button -->
+            <div class="lg:hidden">
+                <button id="nav-toggle"
+                    class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-pink-500">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="w-full hidden flex-grow mt-2" id="nav-dropdown">
+                <ul class="list-reset">
+                    <li class="my-2">
+                        <a href="../index.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 "></i><span
+                                class="pb-1 md:pb-0 text-sm">Home</span>
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href=""
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-pink-500">
+                            <i class="fas fa-tasks fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Whatsapp</span>
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="logs.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-purple-500">
+                            <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Container-->
+    <div class="container w-full mx-auto pt-20">
+
+        <h2 class="text-2xl font-bold text-center">Muvie Logs </h2>
+
+        <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+
+
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="log-container bg-white rounded p-5" id="log-container"></div>
+
+
+
+            </div>
+
+    
+
+        </div>
+
+
+    </div>
+    <!--/container-->
+
+
+    <script>
+        
+        var navToggle = document.getElementById('nav-toggle');
+        var navDropdown = document.getElementById('nav-dropdown');
+
+        navToggle.addEventListener('click', function () {
+            navDropdown.classList.toggle('hidden');
+        });
+
+        function getLogs() {
+
+        axios.get('https://muvie.app/api/api/log')
+            .then(res => {
+                // Use the log content here
+                console.log(res.data["log"]);
+                const logContainer = document.getElementById('log-container');
+                logContainer.innerText = res.data["log"];
+                logContainer.scrollTop = logContainer.scrollHeight;
+            })
+            .catch(error => console.error(error));
+        }
+
+
+        getLogs();
+        setInterval(getDashboard, 60000);
+    </script>
+
+</body>
+
+</html>
