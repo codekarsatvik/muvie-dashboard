@@ -337,32 +337,32 @@
                 });
             };
 
-            // axios.get("https://muvie.app/api/admin_whatsapp_bot")
-            //     .then(response => {
-            //         const data = response.data;
-            //         document.getElementById("bot-user-count").innerHTML = data.length;
-            //         console.log(data)
-            //         const pageCount = Math.ceil(data.length / pageSize);
-            //         renderDataWhatsapp(data.slice(0, pageSize));
+            axios.get("https://muvie.app/api/admin_whatsapp_bot")
+                .then(response => {
+                    const data = response.data;
+                    document.getElementById("bot-user-count").innerHTML = data.length;
+                    console.log(data)
+                    const pageCount = Math.ceil(data.length / pageSize);
+                    renderDataWhatsapp(data.slice(0, pageSize));
 
-            //         nextBtnWhatsapp.addEventListener("click", () => {
-            //             if (currentPage < pageCount - 1) {
-            //                 currentPage++;
-            //                 renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
-            //             }
-            //         });
+                    nextBtnWhatsapp.addEventListener("click", () => {
+                        if (currentPage < pageCount - 1) {
+                            currentPage++;
+                            renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
 
-            //         prevBtnWhatsapp.addEventListener("click", () => {
-            //             if (currentPage > 0) {
-            //                 currentPage--;
-            //                 renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
-            //             }
-            //         });
+                    prevBtnWhatsapp.addEventListener("click", () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderDataWhatsapp(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
 
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
             axios.get("https://muvie.app/api/admin_chat_whatsapp_bot")
                 .then(response => {
