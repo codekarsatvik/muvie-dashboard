@@ -98,6 +98,7 @@
                     <input id="numberInput" type="text"
                         class="border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <div id="displayNumbers" class="mt-4 flex flex-wrap gap-2"></div>
+                    <input id="textInput" type="text">
                 </div>
                 <button id="sendMessageButton"
                     class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
@@ -131,8 +132,10 @@
 
     <script>
         const numberInput = document.getElementById('numberInput');
+        const textInput = document.getElementById('textInput');
         const displayNumbers = document.getElementById('displayNumbers');
         const sendMessageButton = document.getElementById('sendMessageButton');
+
 
         let paddedNumbers = []; // Array to store padded numbers
 
@@ -169,11 +172,12 @@
                 }
             });
         });
-
+        console.log(textInput.value)
         sendMessageButton.addEventListener('click', () => {
+            console.log("hello")
             if (paddedNumbers.length > 0) {
                 // Send the paddedNumbers array to the Flask backend using Axios
-                axios.post('http://localhost:5000/send_whatsapp_message_admin', { numbers: paddedNumbers })
+                axios.post('https://muvie.app/api/send_whatsapp_message_admin', { numbers: paddedNumbers , text : textInput.value })
                     .then(response => {
                         // Handle the response from the Flask backend
                         console.log(response.data);
@@ -187,7 +191,7 @@
 
         function formatIndianMobileNumber(number) {
             // Apply formatting to the number (e.g., 9876543210 -> +91 98765-43210)
-            return '+91' + number;
+            return '91' + number;
         }
 
         function removePaddedNumber(number) {
@@ -201,7 +205,7 @@
         //  For Emails
         const emailInput = document.getElementById('emailInput');
         const displayEmails = document.getElementById('displayEmails');
-        const sendEmailButton = document.getElementById('sendMessageButton');
+        const sendEmailButton = document.getElementById('sendEmailButton');
 
         let paddedEmails = []; // Array to store padded emails
 
@@ -237,10 +241,10 @@
             });
         });
 
-        sendMessageButton.addEventListener('click', () => {
+        sendEmailButton.addEventListener('click', () => {
             if (paddedEmails.length > 0) {
                 // Send the paddedEmails array to the Flask backend using Axios
-                axios.post('/send_emails', { emails: paddedEmails })
+                axios.post('https://muvie.app/api/send_feedback_email_admin', { emails: paddedEmails })
                     .then(response => {
                         // Handle the response from the Flask backend
                         console.log(response.data);
