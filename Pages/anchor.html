@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Muvie Dashboard</title>
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
+        integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .log-container {
+            padding: 30px;
+            border-radius: 5px;
+            overflow-y: scroll;
+            max-height: 700px;
+        }
+
+        .truncate {
+            white-space: nowrap;
+            /* prevent the text from wrapping */
+            overflow: hidden;
+            /* hide the overflowing text */
+            text-overflow: ellipsis;
+            /* replace the overflow with an ellipsis */
+            max-width: 200px;
+            /* set a maximum width for the container */
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
+        <div class="w-full container mx-auto flex flex-wrap items-center justify-between px-2 mt-0 pt-3 pb-3 md:pb-0">
+            <div class="w-1/2 pl-2 md:pl-0">
+                <a class="text-gray-900 text-base xl:text-xl no-underline hover:no-underline font-bold" href="#">
+                    <i class="fas fa-sun text-pink-600 pr-3"></i> Dashboard
+                </a>
+            </div>
+
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20"
+                id="nav-content">
+                <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="#"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 "></i><span class="pb-1 md:pb-0 text-sm">Home</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="whatsapp.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-pink-500">
+                            <i class="fas fa-tasks fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Whatsapp</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="logs.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-purple-500">
+                            <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Hamburger Button -->
+            <div class="lg:hidden">
+                <button id="nav-toggle"
+                    class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-pink-500">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="w-full hidden flex-grow mt-2" id="nav-dropdown">
+                <ul class="list-reset">
+                    <li class="my-2">
+                        <a href="../index.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-orange-600">
+                            <i class="fas fa-home fa-fw mr-3 "></i><span class="pb-1 md:pb-0 text-sm">Home</span>
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="whatsapp.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-pink-500">
+                            <i class="fas fa-tasks fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Whatsapp</span>
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="logs.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 hover:border-purple-500">
+                            <i class="fa fa-envelope fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!--Container-->
+    <div class="container w-full mx-auto pt-20">
+
+        <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+            <!--Console Content-->
+
+            <div class="flex flex-wrap just">
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-green-600"><i
+                                        class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Total Creations</h5>
+                                <h3 class="font-bold text-3xl" id="total-task-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Total Users</h5>
+                                <h3 class="font-bold text-3xl" id="total-user-count">--</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-indigo-600"><i
+                                        class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Executed tasks</h5>
+                                <h3 class="font-bold text-3xl" id="executed-task-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-indigo-600"><i
+                                        class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Executing tasks</h5>
+                                <h3 class="font-bold text-3xl" id="executing-task-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-white border rounded shadow p-2">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-500">Failed tasks</h5>
+                                <h3 class="font-bold text-3xl" id="failed-task-count">-- </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+
+
+            </div>
+
+            <!--Divider-->
+            <hr class="border-b-2 border-gray-400 my-8 mx-4">
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+
+
+                <!--  task table -->
+                <div id="tasks" class="w-full p-4 flex flex-col  justify-center overflow-x-auto">
+                    <table class="w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="border p-2">No.</th>
+                                <th class="border p-2">Created By</th>
+                                <th class="border p-2">Status</th>
+                                <th class="border p-2">Created at</th>
+                                <th class="border p-2">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="admin-queue-table-body">
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-between mt-4">
+                        <button id="prev-btn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Prev
+                        </button>
+                        <button id="next-btn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+        // Mobile Navigation Toggle
+        var navToggle = document.getElementById('nav-toggle');
+        var navDropdown = document.getElementById('nav-dropdown');
+        const axios_base_url = "https://muvie.app/api/dashboard";
+
+        navToggle.addEventListener('click', function () {
+            navDropdown.classList.toggle('hidden');
+        });
+
+        function getAnchorData() {
+            const adminQueueTableBody = document.getElementById("admin-queue-table-body");
+            const prevBtn = document.getElementById("prev-btn");
+            const nextBtn = document.getElementById("next-btn");
+
+            const pageSize = 15;
+            let currentPage = 0;
+
+            const renderData = (data) => {
+                adminQueueTableBody.innerHTML = "";
+
+                data.forEach((creation, index) => {
+                    const tr = document.createElement("tr");
+                    tr.className = `${creation["status"] === "Successful" ? "bg-success-100" : (creation["status"] === "Queued" ? "bg-warning-100" : "bg-primary-100")} cursor-pointer`;
+
+                    const tdNo = document.createElement("td");
+                    tdNo.className = "whitespace-nowrap px-6 py-4 font-medium";
+                    tdNo.textContent = index + 1 + currentPage * pageSize;
+
+                    const tdUseremail = document.createElement("td");
+                    tdUseremail.className = "whitespace-nowrap px-6 py-4";
+
+                    tdUseremail.textContent = creation["user_email"];
+
+
+                    const tdStatus = document.createElement("td");
+                    tdStatus.className = "whitespace-nowrap px-6 py-4";
+                    tdStatus.textContent = creation["status"];
+                    const now = Date.now();
+                    const targetTime = new Date(creation["created_at"]);
+                    const diff = (now - targetTime.getTime());
+                    let formattedDiff;
+                    if (diff < 1000) {
+                        formattedDiff = "less than 1 second";
+                    } else if (diff < 60 * 1000) {
+                        formattedDiff = Math.floor(diff / 1000) + " seconds ";
+                    } else if (diff < 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 1000)) + " minutes ";
+                    } else if (diff < 24 * 60 * 60 * 1000) {
+                        formattedDiff = Math.floor(diff / (60 * 60 * 1000)) + " hours ";
+                    } else {
+                        formattedDiff = Math.floor(diff / (24 * 60 * 60 * 1000)) + " days ";
+                    }
+
+                    creation.created_at = formattedDiff
+
+                    const tdCreatedAt = document.createElement("td");
+                    tdCreatedAt.className = "whitespace-nowrap px-6 py-4";
+                    tdCreatedAt.textContent = `${formattedDiff} ago`;
+
+                    const tdAction = document.createElement("td");
+                    tdAction.className = "whitespace-nowrap px-6 py-4";
+
+
+                    if (creation["video_path"]) {
+
+                        const button = document.createElement("button");
+                        button.textContent = "Video";
+                        button.className = "bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                        button.addEventListener("click", () => {
+                            window.open(creation["video_path"], "_blank");
+                        });
+
+                        tdAction.appendChild(button);
+                    }
+
+                    if (creation["audio_path"]) {
+
+                        const button = document.createElement("button");
+                        button.textContent = "Audio";
+                        button.className = "bg-blue-500 text-white font-bold py-2 px-4 rounded mx-2"
+                        button.addEventListener("click", () => {
+                            window.open(creation["audio_path"], "_blank");
+                        });
+
+                        tdAction.appendChild(button);
+                    }
+
+                    tr.appendChild(tdNo);
+                    tr.appendChild(tdUseremail);
+                    tr.appendChild(tdStatus);
+                    tr.appendChild(tdCreatedAt);
+                    tr.appendChild(tdAction);
+
+                    adminQueueTableBody.appendChild(tr);
+                });
+            };
+
+
+            axios.post(axios_base_url, { "service": "anchor_queue" })
+                .then(response => {
+                    const data = response.data;
+                    document.getElementById("total-task-count").innerHTML = data.length;
+                    document.getElementById("executed-task-count").innerHTML = data.filter(task => task["status"] == 'Successful').length
+                    document.getElementById("executing-task-count").innerHTML = data.filter(task => task["status"] == 'Creating Video' || task["status"] == 'Creating Audio').length
+                    document.getElementById("failed-task-count").innerHTML = data.filter(task => task["status"] == 'Failed').length
+
+                    const distinctEmails = data.reduce((acc, curr) => {
+                        const email = curr["user_email"];
+                        if (!acc[email]) {
+                            acc[email] = true;
+                        }
+                        return acc;
+                    }, {});
+                    const emailCount = Object.keys(distinctEmails).length;
+                    document.getElementById("total-user-count").innerHTML = emailCount;
+
+
+                    const pageCount = Math.ceil(data.length / pageSize);
+                    renderData(data.slice(0, pageSize));
+
+                    nextBtn.addEventListener("click", () => {
+                        if (currentPage < pageCount - 1) {
+                            currentPage++;
+                            renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+
+                    prevBtn.addEventListener("click", () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderData(data.slice(currentPage * pageSize, currentPage * pageSize + pageSize));
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+
+
+
+        }
+        // function countUsersByDay(userList) {
+        //     // Create an object to store the count of users per day
+
+        //     const userCountByDay = {};
+
+        //     // Iterate over the user list
+        //     for (const user of userList) {
+        //         // Extract the date from the timestamp
+        //         const date = new Date(user.created_at).toLocaleDateString();
+
+        //         // Increment the user count for the corresponding day
+        //         if (userCountByDay[date]) {
+        //             userCountByDay[date]++;
+        //         } else {
+        //             userCountByDay[date] = 1;
+        //         }
+        //     }
+        //     // Sort the result by count of users in descending order
+        //     const sortedResult = Object.entries(userCountByDay).sort((a, b) => b[0] - a[0]);
+
+        //     // Convert the sorted array back to an object
+        //     const sortedUserCountByDay = {};
+        //     for (const [date, count] of sortedResult) {
+        //         sortedUserCountByDay[date] = count;
+        //     }
+        //     console.log(sortedUserCountByDay)
+        //     return sortedUserCountByDay;
+
+        // }
+        // function countUserDays(userList) {
+        //     // Create an object to store the count of user days
+        //     const userDaysCount = {};
+
+        //     // Iterate over the user list
+        //     for (const user of userList) {
+        //         // Extract the user name and date from the timestamp
+        //         const { user_email, created_at } = user;
+        //         const date = new Date(created_at).toLocaleDateString();
+
+        //         // Increment the count of user days
+        //         if (userDaysCount[user_email]) {
+        //             userDaysCount[user_email].add(date);
+        //         } else {
+        //             userDaysCount[user_email] = new Set([date]);
+        //         }
+        //     }
+        //     // Convert the object to an array of key-value pairs
+        //     const countArray = Object.entries(userDaysCount);
+
+        //     // Sort the array by count of days in descending order
+        //     countArray.sort((a, b) => b[1].size - a[1].size);
+
+        //     // Convert the sorted array back to an object
+        //     const sortedUserCountOfDays = {};
+        //     for (const [name, dates] of countArray) {
+        //         sortedUserCountOfDays[name] = dates.size;
+        //     }
+
+        //     console.log(sortedUserCountOfDays)
+
+        //     return sortedUserCountOfDays;
+
+        // }
+
+        getAnchorData();
+        setInterval(getAnchorData, 60000);
+    </script>
+
+</body>
+
+</html>
